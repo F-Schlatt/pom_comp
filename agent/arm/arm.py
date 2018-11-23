@@ -22,8 +22,8 @@ class Arm():
         self.load(path)
 
     def choose_action(self, images, scalar, actions):
-        expected_value = self.v_network(images, scalar).detach().squeeze()
-        cf_values = [self.q_network(images, scalar, action).detach().squeeze()
+        expected_value = self.expected_value(images, scalar).detach().squeeze()
+        cf_values = [self.cf_value(images, scalar, action).detach().squeeze()
                      for action in actions]
         action_values = [max(torch.zeros(1), (cf_value - expected_value))
                          for cf_value in cf_values]
@@ -42,6 +42,12 @@ class Arm():
         self.v_network.load_state_dict(model['v_network'])
         self.q_network.load_state_dict(model['q_network'])
 
+    def cf_value(self, images, scalar, action, t=False):
+        scalar = torch.cat((scalar, action), 1)
+        return self.q_network(images, scalar)
+
+    def expected_value(self, images, scalar, t=False):
+        return self.v_network(images, scalar)
 
 class Net(nn.Module):
     def __init__(self, img_input_dim, scalar_input_dim):

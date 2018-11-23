@@ -31,7 +31,7 @@ class Agent(BaseAgent):
 
         self.save_board = save_board
 
-        actions = np.eye(action_space.n)
+        actions = np.eye(action_space)
 
         images = torch.tensor(images).unsqueeze(0).float()
         scalar = torch.tensor(scalar).unsqueeze(0).float()
