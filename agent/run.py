@@ -1,6 +1,6 @@
 """Implementation of a simple deterministic agent using Docker."""
 
-from arm import Agent
+from agent import Agent
 from pommerman.runner import DockerAgentRunner
 
 
