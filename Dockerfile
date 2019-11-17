@@ -1,6 +1,6 @@
 FROM python:3.7
 
-ADD ./agent
+ADD ./agent /agent
 
 RUN pip install torch
 RUN pip install git+https://www.github.com/MultiAgentLearning/playground
